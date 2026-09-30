@@ -24,18 +24,150 @@ export interface CentroCosto {
   padreId?: string;
 }
 
+export type RolPersonal =
+  | 'chofer_mixer'
+  | 'chofer_bomba'
+  | 'chofer_camion'
+  | 'maquinista'
+  | 'operador_planta'
+  | 'mecanico'
+  | 'ayudante_mecanico'
+  | 'laboratorista'
+  | 'administrativo'
+  | 'vendedor'
+  | 'compras'
+  | 'encargado'
+  | 'supervisor'
+  | 'sereno'
+  | 'otro';
+
+export interface HabilitacionEquipo {
+  equipoTipoOrId: string; // e.g. 'mixer', 'cargadora', 'bomba'
+  habilitado: boolean;
+  fechaVencimiento?: string;
+}
+
+export interface DocumentoEmpleado {
+  id: string;
+  tipo: 'dni' | 'cuil' | 'licencia' | 'linti' | 'psicofisico' | 'art' | 'capacitacion' | 'contrato' | 'otro';
+  numero: string;
+  fechaEmision: string;
+  fechaVencimiento: string;
+  archivoUrl?: string;
+  estado: 'vigente' | 'proximo_vencimiento' | 'vencido';
+  bloqueanteOperativo: boolean;
+}
+
 export interface Empleado {
   id: string;
   legajo: string;
   nombre: string;
   apellido: string;
+  dni: string;
   cuil: string;
-  puesto: 'chofer_mixer' | 'chofer_bomba' | 'maquinista' | 'operador_planta' | 'mecanico' | 'laboratorista' | 'administrativo' | 'vendedor' | 'encargado';
+  roles: RolPersonal[];
   categoria: string;
+  convenio: string;
+  fechaIngreso: string;
   telefono: string;
-  licenciaVencimiento?: string;
-  estado: 'activo' | 'licencia' | 'baja';
+  email: string;
+  domicilio: string;
+  contactoEmergencia: string;
+  telefonoEmergencia: string;
+  estado: 'activo' | 'licencia' | 'vacaciones' | 'suspendido' | 'baja';
   sueldoBasico: number;
+  centroCostoHabitualId: string;
+  banco: string;
+  cbu: string;
+  // Habilitaciones específicas
+  licenciaConducir?: {
+    nro: string;
+    categoria: string;
+    vencimiento: string;
+    lintiVencimiento?: string;
+    psicofisicoVencimiento?: string;
+  };
+  habilitacionesEquipos: HabilitacionEquipo[];
+  documentos: DocumentoEmpleado[];
+}
+
+export interface FichadaAsistencia {
+  id: string;
+  empleadoId: string;
+  fecha: string;
+  tipo: 'entrada' | 'salida' | 'inicio_descanso' | 'fin_descanso';
+  hora: string;
+  origen: 'manual' | 'fichador' | 'app';
+  usuarioRegistro: string;
+}
+
+export interface JornadaLaboral {
+  id: string;
+  empleadoId: string;
+  fecha: string;
+  horasPresencia: number;
+  horasNormales: number;
+  horasExtra50: number;
+  horasExtra100: number;
+  tardanzaMinutos: number;
+  estado: 'calculada' | 'aprobada' | 'observada';
+}
+
+export interface NovedadPersonal {
+  id: string;
+  empleadoId: string;
+  tipo: 'ausencia' | 'enfermedad' | 'accidente' | 'vacaciones' | 'licencia' | 'tardanza' | 'premio' | 'descuento';
+  desde: string;
+  hasta: string;
+  observaciones: string;
+  estado: 'solicitada' | 'aprobada' | 'rechazada';
+}
+
+export interface AdelantoPrestamo {
+  id: string;
+  empleadoId: string;
+  tipo: 'adelanto' | 'prestamo';
+  importeTotal: number;
+  cuotasTotal: number;
+  cuotaActual: number;
+  importeCuota: number;
+  fecha: string;
+  estado: 'solicitado' | 'aprobado' | 'pagado' | 'descontado' | 'anulado';
+}
+
+export interface ConceptoLiquidacion {
+  id: string;
+  codigo: string;
+  nombre: string;
+  tipo: 'remunerativo' | 'no_remunerativo' | 'descuento' | 'aporte' | 'contribucion';
+  formulaCalculo?: string;
+}
+
+export interface LiquidacionSueldo {
+  id: string;
+  periodo: string; // '2026-09'
+  empleadoId: string;
+  sueldoBasico: number;
+  totalRemunerativo: number;
+  totalNoRemunerativo: number;
+  totalDescuentos: number;
+  netoAPagar: number;
+  contribucionesPatronales: number;
+  costoTotalEmpresa: number;
+  estado: 'borrador' | 'calculada' | 'aprobada' | 'cerrada' | 'pagada';
+}
+
+export interface ImputacionCostoLaboral {
+  id: string;
+  empleadoId: string;
+  fecha: string;
+  centroCostoId: string;
+  equipoId?: string;
+  viajeId?: string;
+  ordenTrabajoId?: string;
+  horasImputadas: number;
+  costoHorario: number;
+  costoTotalImputado: number;
 }
 
 export interface Equipo {
@@ -89,7 +221,7 @@ export interface Pedido {
   codigo: string;
   clienteId: string;
   obraId: string;
-  productoId: string; // e.g. H30
+  productoId: string;
   cantidadM3: number;
   precioUnitario: number;
   estado: 'borrador' | 'pendiente_aprobacion' | 'aprobado' | 'programado' | 'en_ejecucion' | 'completado' | 'cancelado';
@@ -107,7 +239,7 @@ export interface Viaje {
   clienteId: string;
   obraId: string;
   plantaId: string;
-  equipoId: string; // Mixer
+  equipoId: string;
   choferId: string;
   cantidadM3: number;
   estado: 'pendiente' | 'asignado' | 'cargando' | 'en_viaje' | 'en_obra' | 'descargando' | 'regresando' | 'entregado';
@@ -175,3 +307,4 @@ export interface Factura {
   estado: 'emitida' | 'pagada' | 'vencida' | 'anulada';
   remitoNros: string[];
 }
+

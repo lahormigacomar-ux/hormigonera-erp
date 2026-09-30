@@ -36,12 +36,180 @@ export const mockCentrosCosto: CentroCosto[] = [
 ];
 
 export const mockEmpleados: Empleado[] = [
-  { id: 'emp-1', legajo: '1001', nombre: 'Juan', apellido: 'Pérez', cuil: '20-32145678-9', puesto: 'chofer_mixer', categoria: 'Oficial Conductor', telefono: '+54 9 11 4567-8901', licenciaVencimiento: '2027-05-12', estado: 'activo', sueldoBasico: 1450000 },
-  { id: 'emp-2', legajo: '1002', nombre: 'Carlos', apellido: 'Gómez', cuil: '20-28987654-3', puesto: 'chofer_mixer', categoria: 'Oficial Conductor', telefono: '+54 9 11 5544-3322', licenciaVencimiento: '2026-11-20', estado: 'activo', sueldoBasico: 1450000 },
-  { id: 'emp-3', legajo: '1003', nombre: 'Marcos', apellido: 'Díaz', cuil: '20-25443322-1', puesto: 'maquinista', categoria: 'Maquinista CAT 950', telefono: '+54 9 11 7788-9900', licenciaVencimiento: '2028-01-15', estado: 'activo', sueldoBasico: 1520000 },
-  { id: 'emp-4', legajo: '1004', nombre: 'Esteban', apellido: 'Quinteros', cuil: '20-31222333-4', puesto: 'operador_planta', categoria: 'Operador Dosificador', telefono: '+54 9 11 2233-4455', estado: 'activo', sueldoBasico: 1600000 },
-  { id: 'emp-5', legajo: '1005', nombre: 'Roberto', apellido: 'Sánchez', cuil: '20-22111444-5', puesto: 'mecanico', categoria: 'Mecánico Especializado', telefono: '+54 9 11 9988-7766', estado: 'activo', sueldoBasico: 1750000 },
-  { id: 'emp-6', legajo: '1006', nombre: 'Dra. Ana', apellido: 'Martínez', cuil: '27-30111222-6', puesto: 'laboratorista', categoria: 'Jefa de Laboratorio', telefono: '+54 9 11 3322-1100', estado: 'activo', sueldoBasico: 1900000 }
+  {
+    id: 'emp-1',
+    legajo: '1001',
+    nombre: 'Juan',
+    apellido: 'Pérez',
+    dni: '32145678',
+    cuil: '20-32145678-9',
+    roles: ['chofer_mixer'],
+    categoria: 'Oficial Conductor',
+    convenio: 'UOCRA / Choferes Hormigoneras',
+    fechaIngreso: '2022-03-10',
+    telefono: '+54 9 11 4567-8901',
+    email: 'jperez@concretera.com',
+    domicilio: 'Av. San Martín 1240, Tigre',
+    contactoEmergencia: 'María Gómez (Esposa)',
+    telefonoEmergencia: '+54 9 11 4567-8902',
+    estado: 'activo',
+    sueldoBasico: 1450000,
+    centroCostoHabitualId: 'cc-transporte',
+    banco: 'Banco Galicia',
+    cbu: '0070085120000012345678',
+    licenciaConducir: {
+      nro: '32145678',
+      categoria: 'E1 / E2 (Articulados y Cargas Peligrosas)',
+      vencimiento: '2027-05-12',
+      lintiVencimiento: '2027-05-12',
+      psicofisicoVencimiento: '2027-05-12'
+    },
+    habilitacionesEquipos: [
+      { equipoTipoOrId: 'mixer', habilitado: true, fechaVencimiento: '2027-05-12' },
+      { equipoTipoOrId: 'bomba', habilitado: false }
+    ],
+    documentos: [
+      { id: 'doc-1', tipo: 'licencia', numero: '32145678', fechaEmision: '2022-05-12', fechaVencimiento: '2027-05-12', estado: 'vigente', bloqueanteOperativo: false },
+      { id: 'doc-2', tipo: 'psicofisico', numero: 'PSI-9921', fechaEmision: '2022-05-12', fechaVencimiento: '2027-05-12', estado: 'vigente', bloqueanteOperativo: false },
+      { id: 'doc-3', tipo: 'linti', numero: 'LINTI-8831', fechaEmision: '2022-05-12', fechaVencimiento: '2027-05-12', estado: 'vigente', bloqueanteOperativo: true }
+    ]
+  },
+  {
+    id: 'emp-2',
+    legajo: '1002',
+    nombre: 'Carlos',
+    apellido: 'Gómez',
+    dni: '28987654',
+    cuil: '20-28987654-3',
+    roles: ['chofer_mixer', 'chofer_camion'],
+    categoria: 'Oficial Conductor',
+    convenio: 'UOCRA / Choferes',
+    fechaIngreso: '2020-06-15',
+    telefono: '+54 9 11 5544-3322',
+    email: 'cgomez@concretera.com',
+    domicilio: 'Calle 9 de Julio 450, San Fernando',
+    contactoEmergencia: 'Lucía Gómez (Hija)',
+    telefonoEmergencia: '+54 9 11 5544-3399',
+    estado: 'activo',
+    sueldoBasico: 1450000,
+    centroCostoHabitualId: 'cc-transporte',
+    banco: 'Banco Nación',
+    cbu: '0110599530000045678912',
+    licenciaConducir: {
+      nro: '28987654',
+      categoria: 'E1',
+      vencimiento: '2026-10-20', // Próximo a vencer
+      lintiVencimiento: '2026-10-20',
+      psicofisicoVencimiento: '2026-10-20'
+    },
+    habilitacionesEquipos: [
+      { equipoTipoOrId: 'mixer', habilitado: true, fechaVencimiento: '2026-10-20' }
+    ],
+    documentos: [
+      { id: 'doc-4', tipo: 'licencia', numero: '28987654', fechaEmision: '2021-10-20', fechaVencimiento: '2026-10-20', estado: 'proximo_vencimiento', bloqueanteOperativo: true }
+    ]
+  },
+  {
+    id: 'emp-3',
+    legajo: '1003',
+    nombre: 'Marcos',
+    apellido: 'Díaz',
+    dni: '25443322',
+    cuil: '20-25443322-1',
+    roles: ['maquinista'],
+    categoria: 'Maquinista Vial Principal',
+    convenio: 'UOCRA / Vialidad',
+    fechaIngreso: '2019-01-10',
+    telefono: '+54 9 11 7788-9900',
+    email: 'mdiaz@concretera.com',
+    domicilio: 'Ruta 24 KM 5, Benavídez',
+    contactoEmergencia: 'Rosa Díaz',
+    telefonoEmergencia: '+54 9 11 7788-9911',
+    estado: 'activo',
+    sueldoBasico: 1520000,
+    centroCostoHabitualId: 'cc-aridos',
+    banco: 'Banco Provincia',
+    cbu: '0140000703000078912345',
+    habilitacionesEquipos: [
+      { equipoTipoOrId: 'cargadora', habilitado: true, fechaVencimiento: '2028-01-15' },
+      { equipoTipoOrId: 'excavadora', habilitado: true, fechaVencimiento: '2028-01-15' }
+    ],
+    documentos: [
+      { id: 'doc-5', tipo: 'capacitacion', numero: 'CAP-CAT-01', fechaEmision: '2023-01-15', fechaVencimiento: '2028-01-15', estado: 'vigente', bloqueanteOperativo: false }
+    ]
+  },
+  {
+    id: 'emp-4',
+    legajo: '1004',
+    nombre: 'Esteban',
+    apellido: 'Quinteros',
+    dni: '31222333',
+    cuil: '20-31222333-4',
+    roles: ['operador_planta'],
+    categoria: 'Operador Dosificador Planta',
+    convenio: 'UOCRA',
+    fechaIngreso: '2021-08-01',
+    telefono: '+54 9 11 2233-4455',
+    email: 'equinteros@concretera.com',
+    domicilio: 'Av. Mitre 890, Campana',
+    contactoEmergencia: 'Carla Ruiz',
+    telefonoEmergencia: '+54 9 11 2233-4466',
+    estado: 'activo',
+    sueldoBasico: 1600000,
+    centroCostoHabitualId: 'cc-hormigon',
+    banco: 'Banco Galicia',
+    cbu: '0070085130000098765432',
+    habilitacionesEquipos: [],
+    documentos: []
+  },
+  {
+    id: 'emp-5',
+    legajo: '1005',
+    nombre: 'Roberto',
+    apellido: 'Sánchez',
+    dni: '22111444',
+    cuil: '20-22111444-5',
+    roles: ['mecanico'],
+    categoria: 'Mecánico Especializado Pesados',
+    convenio: 'SMATA / Mecánicos',
+    fechaIngreso: '2018-05-20',
+    telefono: '+54 9 11 9988-7766',
+    email: 'rsanchez@concretera.com',
+    domicilio: 'Calle Perú 310, Escobar',
+    contactoEmergencia: 'Silvia Morales',
+    telefonoEmergencia: '+54 9 11 9988-7777',
+    estado: 'activo',
+    sueldoBasico: 1750000,
+    centroCostoHabitualId: 'cc-taller',
+    banco: 'Banco Santander',
+    cbu: '0720000720000011223344',
+    habilitacionesEquipos: [],
+    documentos: []
+  },
+  {
+    id: 'emp-6',
+    legajo: '1006',
+    nombre: 'Dra. Ana',
+    apellido: 'Martínez',
+    dni: '30111222',
+    cuil: '27-30111222-6',
+    roles: ['laboratorista'],
+    categoria: 'Jefa de Laboratorio de Hormigón',
+    convenio: 'Fuera de Convenio',
+    fechaIngreso: '2017-02-10',
+    telefono: '+54 9 11 3322-1100',
+    email: 'amartinez@concretera.com',
+    domicilio: 'Calle Los Jazmines 500, Pilar',
+    contactoEmergencia: 'Juan Martínez',
+    telefonoEmergencia: '+54 9 11 3322-1111',
+    estado: 'activo',
+    sueldoBasico: 1900000,
+    centroCostoHabitualId: 'cc-hormigon',
+    banco: 'Banco Galicia',
+    cbu: '0070085140000055667788',
+    habilitacionesEquipos: [],
+    documentos: []
+  }
 ];
 
 export const mockEquipos: Equipo[] = [

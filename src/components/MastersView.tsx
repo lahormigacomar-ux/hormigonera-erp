@@ -126,7 +126,7 @@ export const MastersView: React.FC<MastersViewProps> = ({
                       <td className="p-3 font-mono font-bold text-amber-400">{emp.legajo}</td>
                       <td className="p-3 font-medium text-white">{emp.apellido}, {emp.nombre}</td>
                       <td className="p-3 font-mono">{emp.cuil}</td>
-                      <td className="p-3 capitalize">{emp.puesto.replace('_', ' ')}</td>
+                      <td className="p-3 capitalize">{emp.roles.map(r => r.replace('_', ' ')).join(', ')}</td>
                       <td className="p-3">{emp.categoria}</td>
                       <td className="p-3">
                         <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
